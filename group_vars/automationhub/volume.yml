@@ -1,11 +1,13 @@
+---
+
 data_filesystems:
   - path: /var/lib/pulp
     src: /dev/data_vg/lv_pulp
-  - path: /var/backups/tower/
-    src: /dev/data_vg/lv_backups_tower
+  - path: /var/backups/automation-platform/
+    src: /dev/data_vg/lv_backups_aap
 
 data_logical_volumes:
   - name: lv_pulp
     size: 55g
-  - name: lv_backups_tower
+  - name: lv_backups_aap
     size: 55g
