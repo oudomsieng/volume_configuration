@@ -1,0 +1,9 @@
+---
+
+data_filesystems:
+  - path: /home/awx
+    src: /dev/data_vg/lv_home_awx
+
+data_logical_volumes:
+  - name: lv_home_awx
+    size: 20g
