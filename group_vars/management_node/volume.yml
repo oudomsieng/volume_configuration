@@ -1,0 +1,9 @@
+---
+
+data_filesystems:
+  - path: /mnt/aap_backups
+    src: /dev/data_vg/lv_aap_backups
+
+data_logical_volumes:
+  - name: lv_aap_backups
+    size: 40g
