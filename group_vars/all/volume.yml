@@ -1,0 +1,5 @@
+---
+
+data_vg: data_vg
+
+data_device: "/dev/sdc"
