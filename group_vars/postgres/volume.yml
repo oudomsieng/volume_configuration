@@ -1,0 +1,13 @@
+---
+
+data_filesystems:
+  - path: /var/lib/pgsql
+    src: /dev/data_vg/lv_pgsql
+  - path: /var/backups/automation-platform/
+    src: /dev/data_vg/lv_backups_aap
+
+data_logical_volumes:
+  - name: lv_pgsql
+    size: 160g
+  - name: lv_backups_aap
+    size: 160g
