@@ -1,0 +1,46 @@
+---
+
+- hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install lvm2 dependency
+      ansible.builtin.package:
+        name: lvm2
+        state: present
+
+    - name: Create logical volumes on data vg
+      community.general.lvol:
+        vg: "{{ data_vg }}"
+        lv: "{{ data_lv_item.name }}"
+        size: "{{ data_lv_item.size }}"
+        force: true
+      loop: "{{ data_logical_volumes }}"
+      loop_control:
+        loop_var: data_lv_item
+
+    - name: Ensure filesystem mount point exist
+      ansible.builtin.file:
+        path: "{{ data_filesystem_item.path }}"
+        state: directory
+      loop: "{{ data_filesystems }}"
+      loop_control:
+        loop_var: data_filesystem_item
+
+    - name: Create xfs filesystem on each logical volume on data vg
+      community.general.filesystem:
+        fstype: xfs
+        dev: "{{ data_filesystem_item.src }}"
+      loop: "{{ data_filesystems }}"
+      loop_control:
+        loop_var: data_filesystem_item   
+
+    - name: Mount filesytems for each logical volume on data vg
+      ansible.posix.mount:
+        path: "{{ data_filesystem_item.path }}"
+        src: "{{ data_filesystem_item.src }}"
+        fstype: xfs
+        state: mounted
+      loop: "{{ data_filesystems }}"
+      loop_control:
+        loop_var: data_filesystem_item
